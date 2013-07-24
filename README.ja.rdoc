@@ -1,0 +1,47 @@
+= ActiveAdminConfirmPage
+
+このgemをインストールするとRailsのActiveAdminでリソースの作成や編集を
+確定する前に確認ページが表示されるようになります。
+<input type="file">の要素にも対応しています。
+
+1. Gemfileにこのgemを追加してください。
+
+  gem 'active_admin_confirm_page'
+
+2. app/assets/javascript/active_admin.js に下記の1行を追加してください。
+
+  //= require active_admin_confirm_page
+
+3. config/locales/ja.yml に日本語ラベル (```ja.form.commit_update``` and ```ja.form.commit_create```) を追加してください。
+
+  ja:
+    form:
+      commit_update:       "更新する(確定)"
+      commit_create:       "新規作成する(確定)"
+
+4. 確認ページを差し込みたいリソースのActiveAdmin DSL定義に以下のように1行追加してください。
+
+  ActiveAdmin.register Product do
+    include ActiveAdminConfirmPage  # ←この行を追加してください。
+
+== 実装方式
+
+include ActiveAdminConfirmPageの行を追加したリソースに対してvalidateの
+アクションとルーティングが追加されます。
+
+例えばproductリソースの場合は以下のようなルーティングが追加されます。
+        validate_admin_product PUT        /admin/products/:id/validate(.:format)    admin/products#validate
+       validate_admin_products POST       /admin/products/validate(.:format)        admin/products#validate
+
+作成フォームと編集フォームでsubmitボタンを押すと、iframeが作られて
+targetをそちらに切り替え、URLをvalidateアクションに切り替えてからsubmitします。
+
+validateアクションは入力チェックがOKなら詳細ページ、NGなら作成フォームまたは
+編集フォームをエラーメッセージとともに表示します。
+
+iframeがロードされたら、iframeの中身を適宜元のページに反映しています。
+
+
+== ライセンス
+
+このgemのライセンスはMIT-LICENSEです。

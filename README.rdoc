@@ -1,0 +1,49 @@
+= ActiveAdminConfirmPage
+
+When you install this gem, the confirm page is inserted before
+committing creation and update of resources in Rails ActiveAdmin.
+Forms containing <input type="file"> are supported, too.
+
+1. Add this gem to Gemfile.
+
+  gem 'active_admin_confirm_page'
+
+2. Add the line below to app/assets/javascript/active_admin.js
+
+  //= require active_admin_confirm_page
+
+3. Add translation messages (```ja.form.commit_update``` and ```ja.form.commit_create```)
+  to config/locales/ja.yml.
+
+  ja:
+    form:
+      commit_update:       "更新する(確定)"
+      commit_create:       "新規作成する(確定)"
+
+4. Add the line below to your resource ActiveAdmin DSL.
+
+  ActiveAdmin.register Product do
+    include ActiveAdminConfirmPage  # Add this line.
+
+== Implementation
+
+The validate action and routings are added when you
+include ActiveAdminConfirmPage in your resources.
+
+For example, these routings are added for a product resource.
+        validate_admin_product PUT        /admin/products/:id/validate(.:format)    admin/products#validate
+       validate_admin_products POST       /admin/products/validate(.:format)        admin/products#validate
+
+When you press the submit button in a create or update form, an iframe
+is created, the target of the form is changed to it, and the action of
+the form is changed to the validate action.
+
+The validate action shows a detail page when validation is OK,
+shows a create or update form with error messages otherwise.
+
+When the iframe is loaded, the contents will be applied to the original
+page appropriately.
+
+
+== License
+This gem is released under MIT-LICENSE.
