@@ -24,6 +24,11 @@
   ActiveAdmin.register Product do
     include ActiveAdminConfirmPage  # ←この行を追加してください。
 
+  あるいは下記のrakeタスクを実行してください。
+
+  bundle exec rake active_admin_confirm_page:check_resources
+  bundle exec rake active_admin_confirm_page:modify_resources
+
 == 実装方式
 
 include ActiveAdminConfirmPageの行を追加したリソースに対してvalidateの

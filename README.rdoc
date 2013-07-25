@@ -25,6 +25,11 @@ Forms containing <input type="file"> are supported, too.
   ActiveAdmin.register Product do
     include ActiveAdminConfirmPage  # Add this line.
 
+  Or you can use rake tasks.
+
+  bundle exec rake active_admin_confirm_page:check_resources
+  bundle exec rake active_admin_confirm_page:modify_resources
+
 == Implementation
 
 The validate action and routings are added when you
