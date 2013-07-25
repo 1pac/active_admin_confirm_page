@@ -18,7 +18,7 @@ GIT
 PATH
   remote: .
   specs:
-    active_admin_confirm_page (0.2.2)
+    active_admin_confirm_page (0.2.3)
       activeadmin
       rails (~> 3.2.13)
 
